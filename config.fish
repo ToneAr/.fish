@@ -18,15 +18,25 @@ set -x CONFIG_CURL_TIMEOUT 1
 
 # Utility functions
 function _omp_setup
-	set omp_theme_url https://raw.githubusercontent.com/ToneAr/TONE-oh-my-posh-theme/refs/heads/main/tone.omp.json
+	set omp_theme_clone_url git@github.com:ToneAr/TONE-oh-my-posh-theme.git
 	set omp_config_dir $HOME/.poshthemes/
-	set content "$(curl -m $CONFIG_CURL_TIMEOUT -s $omp_theme_url)"
-	if test -n "$content"
-		echo "$content" > $omp_config_dir/tone.omp.json
+	begin
+		git clone \
+			$omp_theme_clone_url \
+			$script_dir/repos/tone-omp-theme \
+			--single-branch
+	end &> /dev/null
+	set clone_exit_code $status
+	if test -n "$script_dir/repos/tone-omp-theme"; and test $clone_exit_code -eq 0
+		cp -f \
+			$script_dir/repos/tone-omp-theme/tone.omp.json \
+			$omp_config_dir/tone.omp.json
 	end
 	if test -f "$omp_config_dir/tone.omp.json"
 		begin
-			oh-my-posh init fish --config $omp_config_dir/tone.omp.json | source
+			oh-my-posh init fish \
+				--config $omp_config_dir/tone.omp.json \
+				| source
 		end &> /dev/null
 	else
 		set_color red
@@ -36,17 +46,18 @@ function _omp_setup
 end
 
 function _proj_setup
-	set proj_def_url https://raw.githubusercontent.com/ToneAr/proj-cli/refs/heads/main/proj.fish
-	set content "$(curl -m $CONFIG_CURL_TIMEOUT -s $proj_def_url)"
-	if test -n "$content"
-		echo "$content" > $script_dir/functions/proj.fish
+	set proj_clone_url git@github.com:ToneAr/proj-cli.git
+	begin
+		git clone $proj_clone_url $script_dir/repos/proj-cli/ --single-branch
+	end &> /dev/null
+	set clone_exit_code $status
+	if test -n "$script_dir/repos/proj-cli/"; and test $clone_exit_code -eq 0
+		cp -f \
+			$script_dir/repos/proj-cli/proj.fish \
+			$script_dir/functions/proj.fish
 		source $script_dir/functions/proj.fish
 	else
-		if test -f "$script_dir/functions/proj.fish"
-			set_color red
-			echo -e "Failed to update proj.fish"
-			set_color normal
-		else
+		if not test -f "$script_dir/functions/proj.fish"
 			set_color red
 			echo -e "Failed to fetch proj.fish"
 			set_color normal
