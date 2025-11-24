@@ -27,10 +27,18 @@ function _omp_setup
 			--single-branch
 	end &> /dev/null
 	set clone_exit_code $status
-	if test -n "$script_dir/repos/tone-omp-theme"; and test $clone_exit_code -eq 0
-		cp -f \
-			$script_dir/repos/tone-omp-theme/tone.omp.json \
-			$omp_config_dir/tone.omp.json
+	if test -n "$script_dir/repos/tone-omp-theme"
+		if test $clone_exit_code -eq 128
+			begin
+				git pull
+				set clone_exit_code $status
+			end &> /dev/null
+		end
+		if test $clone_exit_code -eq 0
+			cp -f \
+				$script_dir/repos/tone-omp-theme/tone.omp.json \
+				$omp_config_dir/tone.omp.json
+		end
 	end
 	if test -f "$omp_config_dir/tone.omp.json"
 		begin
@@ -51,11 +59,19 @@ function _proj_setup
 		git clone $proj_clone_url $script_dir/repos/proj-cli/ --single-branch
 	end &> /dev/null
 	set clone_exit_code $status
-	if test -n "$script_dir/repos/proj-cli/"; and test $clone_exit_code -eq 0
-		cp -f \
-			$script_dir/repos/proj-cli/proj.fish \
-			$script_dir/functions/proj.fish
-		source $script_dir/functions/proj.fish
+	if test -n "$script_dir/repos/proj-cli/"
+		if test $clone_exit_code -eq 128
+			begin
+				git pull
+				set clone_exit_code $status
+			end &> /dev/null
+		end
+		if test $clone_exit_code -eq 0
+			cp -f \
+				$script_dir/repos/proj-cli/proj.fish \
+				$script_dir/functions/proj.fish
+			source $script_dir/functions/proj.fish
+		end
 	else
 		if not test -f "$script_dir/functions/proj.fish"
 			set_color red
