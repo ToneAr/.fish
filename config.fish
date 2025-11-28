@@ -21,7 +21,7 @@ function _omp_setup
 	set omp_theme_clone_url git@github.com:ToneAr/TONE-oh-my-posh-theme.git
 	set omp_config_dir $HOME/.poshthemes/
 	begin
-		git clone \
+		timeout 1 git clone \
 			$omp_theme_clone_url \
 			$script_dir/repos/tone-omp-theme \
 			--single-branch
@@ -30,7 +30,7 @@ function _omp_setup
 	if test -n "$script_dir/repos/tone-omp-theme"
 		if test $clone_exit_code -eq 128
 			begin
-				git pull
+				timeout 1 git pull
 				set clone_exit_code $status
 			end &> /dev/null
 		end
@@ -56,13 +56,13 @@ end
 function _proj_setup
 	set proj_clone_url git@github.com:ToneAr/proj-cli.git
 	begin
-		git clone $proj_clone_url $script_dir/repos/proj-cli/ --single-branch
+		timeout 1 git clone $proj_clone_url $script_dir/repos/proj-cli/ --single-branch
 	end &> /dev/null
 	set clone_exit_code $status
 	if test -n "$script_dir/repos/proj-cli/"
 		if test $clone_exit_code -eq 128
 			begin
-				git pull
+				timeout 1 git pull
 				set clone_exit_code $status
 			end &> /dev/null
 		end
