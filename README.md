@@ -1,7 +1,7 @@
 I got lazy so this was generated using Claudeand edited a bit for now:
 
 # Fish Shell Configuration
-A comprehensive Fish shell configuration with dynamic theme management, project organization utilities, and system accent color synchronization.
+A Fish shell configuration with dynamic theme management, project organization utilities, and system accent color synchronization.
 
 ## Features
 ### Dynamic Theme Management
@@ -12,7 +12,6 @@ A comprehensive Fish shell configuration with dynamic theme management, project 
 
 ### Project Management
 The `proj` command provides a streamlined project management system:
-
 - **Open Projects**: `proj open <domain> <project_name>` - Navigate to a project directory
 - **Create Projects**: `proj new <domain> <project_name>` - Create a new project directory
 - **Add Git Repositories**: `proj add <domain> <git-clone-url>` - Clone and organize a git repositories
