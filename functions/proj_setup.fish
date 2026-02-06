@@ -24,6 +24,9 @@ function proj_setup
 					cp -f \
 						$local_repo_dir/proj.fish \
 						$script_dir/functions/proj.fish
+					cp -f \
+						$local_repo_dir/completions/proj.fish \
+						$script_dir/completions/proj.fish
 				else
 					if not test -f "$script_dir/functions/proj.fish"
 						printf "%s\n" "Failed to fetch proj.fish" >&2
