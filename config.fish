@@ -1,11 +1,16 @@
 # @fish-lsp-disable 1004
 # Set nvim as default editor
-set -x PATH "$PATH:/opt/nvim-linux-x86_64/bin"
+set -x PATH "$PATH:/opt/nvim-linux-x86_64/bin:/home/tonya/buildmonitor-cli/"
 set -x SUDO_EDITOR "/opt/nvim-linux-x86_64/bin/nvim"
-set -x EDITOR "/opt/nvim-linux-x86_64/bin/nvim"
+set -x EDITOR "code"
+set -x QT_WAYLAND_SHELL_INTEGRATION "xdg-shell"
 
 # WSTP fix for non-standard installation directory
 set -x WSTP_COMPILER_ADDITIONS_DIRECTORY "$MATHEMATICA_HOME/SystemFiles/Links/WSTP/DeveloperKit/Linux-x86-64/CompilerAdditions"
+set -x WSTP_DIR $WSTP_COMPILER_ADDITIONS_DIRECTORY
+
+# opencode
+set -x PATH "$PATH:/home/tonya/.opencode/bin"
 
 # Source secrets
 set script_dir (dirname (status --current-filename))
