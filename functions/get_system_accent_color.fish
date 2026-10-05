@@ -1,6 +1,6 @@
 function get_system_accent_color -d "Get system accent color from various sources"
     # Try KDE Plasma accent color (most reliable)
-    set -l kde_accent (kreadconfig5 --file kdeglobals --group General --key AccentColor 2>/dev/null)
+    set -l kde_accent (kreadconfig6 --file kdeglobals --group General --key AccentColor 2>/dev/null)
     if test -n "$kde_accent"
         # KDE format: "r,g,b" - convert to hex
         set -l rgb (string split ',' $kde_accent)
