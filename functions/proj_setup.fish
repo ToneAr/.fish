@@ -8,7 +8,7 @@ function proj_setup
 		set local_repo_dir $script_dir/repos/proj-cli/
 
 		begin
-			mkdir -p "$script_dir/repos"
+			mkdir -p "$script_dir/repos" "$script_dir/completions"
 			# Try clone first
 			begin
 				git clone $proj_clone_url $local_repo_dir --single-branch
@@ -47,6 +47,13 @@ function proj_setup
 		__fetch_proj $script_dir
 		source "$proj_function_location"
 	end
+	# completions/ isn't on fish's default path when functions/ is symlinked
+	# in from elsewhere (e.g. the NixOS checkout), so add it explicitly
+	set -l completions_dir (path resolve $script_dir/completions)
+	if not contains $completions_dir $fish_complete_path
+		set -g fish_complete_path $completions_dir $fish_complete_path
+	end
+
 	# Run everything asynchronously
 	fish -c "$(functions __fetch_proj); __fetch_proj $script_dir" &
 end
