@@ -33,6 +33,11 @@ The `proj` command provides a streamlined project management system:
 - Git
 - Rust & Cargo (optional, for Rust development)
 
+### Platform Support
+- **Linux**: accent read from KDE Plasma 6 (`kreadconfig6`), GNOME (`gsettings`) or GTK 3/4 CSS
+- **NixOS**: `nixconf` / `nixreload` edit and rebuild the flake in `/etc/nixos`
+- **macOS**: accent read from System Settings → Appearance → Accent colour (`defaults read -g AppleAccentColor`); the theme watcher picks up changes live. Homebrew is added to `PATH` on Apple Silicon and Intel Macs, and with nix-darwin `nixconf` / `nixreload` use `/etc/nix-darwin`
+
 ### Configuration Files
 #### `secrets.fish`
 Store sensitive environment variables here (automatically gitignored):
